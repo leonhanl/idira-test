@@ -1,0 +1,25 @@
+[project]
+name = "echo-mcp-server-no-auth"
+version = "1.0.0"
+description = "Minimal unauthenticated MCP echo server for identity broker experiments"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp==2.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.5.0",
+    "pyright>=1.1.400",
+    "pytest>=8.4.0",
+]
+
+[tool.pyright]
+include = ["server.py", "test_server.py"]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+testpaths = ["test_server.py"]
