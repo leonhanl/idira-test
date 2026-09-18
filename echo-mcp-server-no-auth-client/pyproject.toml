@@ -1,7 +1,7 @@
 [project]
-name = "general-mcp-client"
+name = "echo-mcp-server-no-auth-client"
 version = "0.1.0"
-description = "Minimal test client for an MCP Streamable HTTP server"
+description = "Dedicated CyberArk Gateway client for the unauthenticated Echo MCP server"
 requires-python = ">=3.10"
 dependencies = [
     "httpx2>=2.5.0",

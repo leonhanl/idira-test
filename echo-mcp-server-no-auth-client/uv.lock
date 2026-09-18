@@ -229,7 +229,7 @@ wheels = [
 ]
 
 [[package]]
-name = "general-mcp-client"
+name = "echo-mcp-server-no-auth-client"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

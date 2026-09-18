@@ -1,8 +1,13 @@
-# CyberArk MCP Client
+# Echo MCP Server (No Auth) Client
 
-A minimal local Python client that calls the CyberArk-exposed
-`echo__echo-mcp-server-no-auth` tool through the
-CyberArk Secure AI Gateway using OAuth authorization code flow with PKCE.
+A dedicated local Python client for the unauthenticated
+`echo-mcp-server-no-auth` server. It calls the CyberArk-exposed
+`echo__echo-mcp-server-no-auth` tool through the CyberArk Secure AI Gateway
+using OAuth authorization code flow with PKCE.
+
+This client intentionally targets this one integration scenario. The upstream
+Echo MCP server itself has no authentication; OAuth protects the CyberArk
+Gateway endpoint used by this client.
 
 The client reads the CyberArk registration output from:
 

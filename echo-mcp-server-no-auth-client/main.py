@@ -249,7 +249,9 @@ async def call_echo(config: CyberArkConfig, redirect_uri: str) -> dict[str, Any]
 def parse_args() -> argparse.Namespace:
     client_dir = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(
-        description="Call echo through the CyberArk Secure AI Gateway."
+        description=(
+            "Call echo-mcp-server-no-auth through the CyberArk Secure AI Gateway."
+        )
     )
     parser.add_argument(
         "--credentials",
