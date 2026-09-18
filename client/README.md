@@ -1,10 +1,28 @@
-# General MCP Client
+# CyberArk MCP Client
 
-A minimal test client for an MCP server using the Streamable HTTP transport.
+A minimal local Python client that calls the CyberArk-exposed
+`echo__echo-mcp-server-no-auth` tool through the
+CyberArk Secure AI Gateway using OAuth authorization code flow with PKCE.
 
-The server URL is provided on the command line. The tool name, tool arguments,
-and HTTP headers are intentionally hardcoded near the top of `main.py` so they
-are easy to change during testing.
+The client reads the CyberArk registration output from:
+
+- `lhan_mcp_client-credentials.json`
+- `lhan_mcp_client-connect.json`
+
+These files are ignored by Git because the credentials file contains the agent
+client secret.
+
+## Redirect URI
+
+The default callback is:
+
+```text
+http://127.0.0.1:8765/oauth/callback
+```
+
+It must exactly match a redirect URL registered for the AI agent in CyberArk.
+The client opens the listener only while authorization is in progress and waits
+up to five minutes for the browser callback.
 
 ## Run
 
@@ -12,21 +30,37 @@ Requires Python 3.10 or newer and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync
-uv run python main.py http://127.0.0.1:3000/mcp
+uv run python main.py
 ```
 
-Pass the full MCP endpoint URL, including the `/mcp` route when the server uses
-that route. The client calls `echo` with this argument:
+Each run opens the CyberArk authorization page in the default browser because
+this test client keeps tokens only in memory. After authorization, the MCP SDK
+exchanges the code for a token and calls the namespaced echo tool through the
+`gatewayUrl` in the
+connection file.
 
-```json
-{"message": "hello from the general MCP client"}
+The registered AI agent must also be covered by a CyberArk access policy that
+allows the echo tool on this MCP target. Authentication can succeed while the
+tool call is still denied by policy.
+
+If a different loopback URL was registered, pass the exact value:
+
+```bash
+uv run python main.py \
+  --redirect-uri http://127.0.0.1:9000/oauth/callback
 ```
 
-It also sends these test headers with the MCP HTTP requests:
+Custom file locations can also be supplied:
 
-```text
-x-idira-test: broker-visible-value
-x-test-client: general-mcp-client
+```bash
+uv run python main.py \
+  --credentials /path/to/agent-credentials.json \
+  --connect /path/to/agent-connect.json
 ```
 
-Edit `TOOL_ARGUMENTS` or `HTTP_HEADERS` in `main.py` to change them.
+The tool name, arguments, and test HTTP headers remain hardcoded near the top
+of `main.py` for easy modification.
+
+Every outgoing HTTP request is printed before it is sent, including all header
+names. Sensitive values such as `Authorization` and cookies are shown as
+`<redacted>` so OAuth tokens are not written to terminal logs.
