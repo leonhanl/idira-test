@@ -1,0 +1,22 @@
+[project]
+name = "example-mcp-server-oauth-client"
+version = "0.1.0"
+description = "Dedicated OAuth client for the Example MCP server through CyberArk Identity Broker"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx2>=2.5.0",
+    "mcp==2.2.0",
+    "pydantic>=2.11.0",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.400",
+]
+
+[tool.pyright]
+include = ["main.py"]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
