@@ -1,0 +1,21 @@
+[project]
+name = "general-mcp-client"
+version = "0.1.0"
+description = "Minimal test client for an MCP Streamable HTTP server"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx2>=2.5.0",
+    "mcp==2.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.400",
+]
+
+[tool.pyright]
+include = ["main.py"]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
